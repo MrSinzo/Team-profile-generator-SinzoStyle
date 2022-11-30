@@ -1,0 +1,25 @@
+{
+  "name": "team-profile-generator-sinzostyle",
+  "version": "1.0.0",
+  "description": "A Team Profile generator for teams of people",
+  "main": "index.js",
+  "scripts": {
+    "test": "jest"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/MrSinzo/Team-profile-generator-SinzoStyle.git"
+  },
+  "author": "",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/MrSinzo/Team-profile-generator-SinzoStyle/issues"
+  },
+  "homepage": "https://github.com/MrSinzo/Team-profile-generator-SinzoStyle#readme",
+  "dependencies": {
+    "inquirer": "^8.2.4"
+  },
+  "devDependencies": {
+    "jest": "^29.3.1"
+  }
+}
