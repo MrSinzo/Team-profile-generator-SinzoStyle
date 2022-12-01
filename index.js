@@ -1,6 +1,7 @@
 const inquirer = require("inquirer");
 const fs = require("fs");
-
+const employee = require("./lib/Employee")
+console.log( "hello world")
 const generateHTML = ({
   managerName,
   managerID,
@@ -76,40 +77,77 @@ const generateHTML = ({
         </div>
       </div> 
     </section>
-
     <script src="	https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/js/bootstrap.bundle.min.js"></script>
   </body>
 </html>`;
 /**will need "mail to" links for emails */
-inquirer.prompt([
-  /**starting with team managers questions */
-  {
-    type: "input",
-    name: "managerName",
-    message: "Whats the Team Managers name?",
-  },
-  {
-    type: "input",
-    name: "managerID",
-    message: "Whats the Team Managers ID number?",
-  },
-  {
-    type: "input",
-    name: "managerEmail",
-    message: "What is the Team Manager's Email address?",
-  },
-  {
-    type: "input",
-    name: "managerOffice",
-    message: "What is the Team Manager's office number?",
-  },
+/**
+ * AskBCS says :  Currently the syntax inquirer.prompt is what is prompting “Whats the Team Managers name?” that you’re seeing. 
+ * If you make a function that holds all the prompts then call the function you will be able to get all the prompts
+Then use a .then to handle the user response and next action
+
+My Response : Alright I think i understand. I basically need to put each set of prompts into a promise? and i can use .then to target the next set of prompts, dependant on the answer?
+so all of managers questions into one, engineers into another, etc
+
+AskBCS says :
+Yes exactly! You can also add console.log to ensure you’re getting the data you expect
+Once you give that a shot we can take another look if needed! Just want you to have the function since we typically don’t provide code!
+*/
+
+/**So these prompts need to be in a promise and .then set up... great */
+    inquirer.prompt([
+      /**starting with team managers questions */
+      {
+        type: "input",
+        name: "managerName",
+        message: "Whats the Team Managers name?",
+      },
+      {
+        type: "input",
+        name: "managerID",
+        message: "Whats the Team Managers ID number?",
+      },
+      {
+        type: "input",
+        name: "managerEmail",
+        message: "What is the Team Manager's Email address?",
+      },
+      {
+        type: "input",
+        name: "managerOffice",
+        message: "What is the Team Manager's office number?",
+      }])
+    })}
+
+// inquirer.prompt([
+//   /**starting with team managers questions */
+//   {
+//     type: "input",
+//     name: "managerName",
+//     message: "Whats the Team Managers name?",
+//   },
+//   {
+//     type: "input",
+//     name: "managerID",
+//     message: "Whats the Team Managers ID number?",
+//   },
+//   {
+//     type: "input",
+//     name: "managerEmail",
+//     message: "What is the Team Manager's Email address?",
+//   },
+//   {
+//     type: "input",
+//     name: "managerOffice",
+//     message: "What is the Team Manager's office number?",
+//   },
   {
     type: "list",
     name: "employees",
     message: "What kind of Employee would you like to add?",
     choices: ["Engineer", "Intern", "No more members to add"],
-  },
-]);
+  }
+])
 /**engineer's questions */
 if (choices === "Engineer")
   inquirer.prompt([
@@ -133,7 +171,7 @@ if (choices === "Engineer")
       name: "engineerGithub",
       message: "What is the engineer's Github Username?",
     },
-  ]);
+  ])
 /**Interns Questions */
 if (choices === "Intern")
   inquirer
