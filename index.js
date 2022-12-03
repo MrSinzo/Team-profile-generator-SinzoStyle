@@ -1,7 +1,11 @@
 const inquirer = require("inquirer");
 const fs = require("fs");
-const employee = require("./lib/Employee")
-console.log( "hello world")
+// const Employee = require("./lib/Employee")
+const Manager = require("./lib/Manager");
+const Intern = require("./lib/Intern");
+const Engineer = require("./lib/Engineer");
+
+const teamMember = [];
 const generateHTML = ({
   managerName,
   managerID,
@@ -35,25 +39,25 @@ const generateHTML = ({
     <section name="team profile area" class="d-flex justify-content-around" >
       <div class="card shadow p-3 mb-5 bg-body rounded" style="width: 18rem;">
         <div class="card-body">
-          <div class="bg-info p-2"><h5 class="card-title ml-1">${managerName}</h5><h5 class="ml-1">${getRole()}</h5></div>
+          <div class="bg-info p-2"><h5 class="card-title ml-1">${managerName}</h5><h5 class="ml-1"></h5></div>
             <p class="card-text">ID : ${managerID}</p>
-            <p class="card-text">Email : ${managerEmail}</p>
+            <p class="card-text">Email : <a href="mailto:${managerEmail}">${managerEmail}</a></p>
             <p class="card-text">Office Number : ${managerOffice}</p>
         </div>
       </div>
       <div class="card shadow p-3 mb-5 bg-body rounded" style="width: 18rem;">
         <div class="card-body">
-          <div class="bg-info p-2"><h5 class="card-title ml-1">${engineerName}</h5><h5 class="ml-1">${getRole()}</h5></div>
+          <div class="bg-info p-2"><h5 class="card-title ml-1">${engineerName}</h5><h5 class="ml-1">${engineer.getRole()}</h5></div>
             <p class="card-text">ID : ${engineerID}</p>
-            <p class="card-text">Email : ${engineerEmail}</p>
+            <p class="card-text">Email : <a href="mailto:${engineerEmail}">${engineerEmail}</a></p>
             <p class="card-text"> Github : https://www.github.com/${engineerGithub}</p>
         </div>
       </div>
       <div class="card shadow p-3 mb-5 bg-body rounded" style="width: 18rem;">
         <div class="card-body">
-          <div class="bg-info p-2"><h5 class="card-title ml-1">${engineerName}</h5><h5 class="ml-1">${getRole()}</h5></div>
+          <div class="bg-info p-2"><h5 class="card-title ml-1">${engineerName}</h5><h5 class="ml-1"></h5></div>
             <p class="card-text">ID : ${engineerID}</p>
-            <p class="card-text">Email : ${engineerEmail}</p>
+            <p class="card-text">Email : <a href="mailto:${engineerEmail}">${engineerEmail}</a></p>
             <p class="card-text"> Github : https://www.github.com/${engineerGithub}</p>
         </div>
       </div>
@@ -62,17 +66,17 @@ const generateHTML = ({
     <section name="team profile area" class="d-flex justify-content-around" >
       <div class="card shadow p-3 mb-5 bg-body rounded" style="width: 18rem;">
         <div class="card-body">
-          <div class="bg-info p-2"><h5 class="card-title ml-1">${internName}</h5><h5 class="ml-1">${getRole()}</h5></div>
+          <div class="bg-info p-2"><h5 class="card-title ml-1">${internName}</h5><h5 class="ml-1"></h5></div>
             <p class="card-text">ID : ${internID}</p>
-            <p class="card-text">Email : ${internEmail}</p>
+            <p class="card-text">Email : <a href="mailto:${internEmail}">${internEmail}</a></p>
             <p class="card-text">School : ${internSchool}</p>
         </div>
       </div>
       <div class="card shadow p-3 mb-5 bg-body rounded" style="width: 18rem;">
         <div class="card-body">
-          <div class="bg-info p-2"><h5 class="card-title ml-1">${internName}</h5><h5 class="ml-1">${getRole()}</h5></div>
+          <div class="bg-info p-2"><h5 class="card-title ml-1">${internName}</h5><h5 class="ml-1"></h5></div>
             <p class="card-text">ID : ${internID}</p>
-            <p class="card-text">Email : ${internEmail}</p>
+            <p class="card-text">Email :<a href="mailto:${internEmail}">${internEmail}</a></p>
             <p class="card-text">School : ${internSchool}</p>
         </div>
       </div> 
@@ -80,76 +84,69 @@ const generateHTML = ({
     <script src="	https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/js/bootstrap.bundle.min.js"></script>
   </body>
 </html>`;
-/**will need "mail to" links for emails */
-/**
- * AskBCS says :  Currently the syntax inquirer.prompt is what is prompting “Whats the Team Managers name?” that you’re seeing. 
- * If you make a function that holds all the prompts then call the function you will be able to get all the prompts
-Then use a .then to handle the user response and next action
-
-My Response : Alright I think i understand. I basically need to put each set of prompts into a promise? and i can use .then to target the next set of prompts, dependant on the answer?
-so all of managers questions into one, engineers into another, etc
-
-AskBCS says :
-Yes exactly! You can also add console.log to ensure you’re getting the data you expect
-Once you give that a shot we can take another look if needed! Just want you to have the function since we typically don’t provide code!
-*/
-
-/**So these prompts need to be in a promise and .then set up... great */
-    inquirer.prompt([
-      /**starting with team managers questions */
-      {
-        type: "input",
-        name: "managerName",
-        message: "Whats the Team Managers name?",
-      },
-      {
-        type: "input",
-        name: "managerID",
-        message: "Whats the Team Managers ID number?",
-      },
-      {
-        type: "input",
-        name: "managerEmail",
-        message: "What is the Team Manager's Email address?",
-      },
-      {
-        type: "input",
-        name: "managerOffice",
-        message: "What is the Team Manager's office number?",
-      }])
-    })}
-
-// inquirer.prompt([
-//   /**starting with team managers questions */
-//   {
-//     type: "input",
-//     name: "managerName",
-//     message: "Whats the Team Managers name?",
-//   },
-//   {
-//     type: "input",
-//     name: "managerID",
-//     message: "Whats the Team Managers ID number?",
-//   },
-//   {
-//     type: "input",
-//     name: "managerEmail",
-//     message: "What is the Team Manager's Email address?",
-//   },
-//   {
-//     type: "input",
-//     name: "managerOffice",
-//     message: "What is the Team Manager's office number?",
-//   },
-  {
-    type: "list",
-    name: "employees",
-    message: "What kind of Employee would you like to add?",
-    choices: ["Engineer", "Intern", "No more members to add"],
+/**${getRole()}*/
+function init() {
+  inquirer.prompt([
+    /**starting with team managers questions */
+    {
+      type: "input",
+      name: "managerName",
+      message: "Whats the Team Managers name?",
+    },
+    {
+      type: "input",
+      name: "managerID",
+      message: "Whats the Team Managers ID number?",
+    },
+    {
+      type: "input",
+      name: "managerEmail",
+      message: "What is the Team Manager's Email address?",
+    },
+    {
+      type: "input",
+      name: "managerOffice",
+      message: "What is the Team Manager's office number?",
+    },
+    {
+      type: "list",
+      name: "employees",
+      message: "What kind of Employee would you like to add?",
+      choices: ["Engineer", "Intern", "No more members to add"],
+    },
+  ]);
+  // .then((response) =>
+  if (response.employees === "Intern") {
+    internCall();
   }
-])
+  if (response.employees === "Engineer") {
+    engineerCall();
+  } else {
+    then((response) => {
+      console.log(response);
+      const htmlPageContent = generateHTML(response);
+      fs.writeFile("SAMPLEindex.html", htmlPageContent, (err) =>
+        err
+          ? console.log(err)
+          : console.log(
+              "Successfully created your team profile generated SAMPLEindex.html!"
+            )
+      );
+    });
+  }
+  const manager = new Manager(
+    response.mananagerName,
+    response.managerID,
+    response.managerEmail,
+    response.managerOffice
+  );
+  teamMember.push(manager);
+}
+
+console.log(Manager)
+
 /**engineer's questions */
-if (choices === "Engineer")
+function engineerCall() {
   inquirer.prompt([
     {
       type: "input",
@@ -171,40 +168,109 @@ if (choices === "Engineer")
       name: "engineerGithub",
       message: "What is the engineer's Github Username?",
     },
-  ])
-/**Interns Questions */
-if (choices === "Intern")
-  inquirer
-    .prompt([
-      {
-        type: "input",
-        name: "internName",
-        message: "What is the intern's name?",
-      },
-      {
-        type: "input",
-        name: "internID",
-        message: "What is the Intern's ID number?",
-      },
-      {
-        type: "input",
-        name: "internEmail",
-        message: "What is the Intern's Email address?",
-      },
-      {
-        type: "input",
-        name: "internSchool",
-        message: "What school does the Intern attend?",
-      },
-    ])
-    .then((answers) => {
-      const htmlPageContent = generateHTML(answers);
-
-      fs.writeFile("index.html", htmlPageContent, (err) =>
+    {
+      type: "list",
+      name: "employees",
+      message: "What kind of Employee would you like to add?",
+      choices: ["Engineer", "Intern", "No more members to add"],
+    },
+  ]);
+  if (response.employees === "Intern") {
+    internCall();
+  }
+  if (response.employees === "Engineer") {
+    engineerCall();
+  } else {
+    then((response) => {
+      console.log(response);
+      const htmlPageContent = generateHTML(response);
+      fs.writeFile("SAMPLEindex.html", htmlPageContent, (err) =>
         err
           ? console.log(err)
           : console.log(
-              "Successfully created your team profile generated index.html!"
+              "Successfully created your team profile generated SAMPLEindex.html!"
             )
       );
     });
+  }
+  const engineer = new Engineer(
+    response.engineerName,
+    response.engineerID,
+    response.engineerEmail,
+    response.engineerOffice
+  );
+  teamMember.push(engineer);
+}
+
+console.log(Engineer);
+
+// /**Interns Questions */
+function internCall() {
+  inquirer.prompt([
+    {
+      type: "input",
+      name: "internName",
+      message: "What is the intern's name?",
+    },
+    {
+      type: "input",
+      name: "internID",
+      message: "What is the Intern's ID number?",
+    },
+    {
+      type: "input",
+      name: "internEmail",
+      message: "What is the Intern's Email address?",
+    },
+    {
+      type: "input",
+      name: "internSchool",
+      message: "What school does the Intern attend?",
+    },
+  ]);
+  if (response.employees === "Intern") {
+    internCall();
+  }
+  if (response.employees === "Engineer") {
+    engineerCall();
+  } else {
+    then((response) => {
+      console.log(response);
+      const htmlPageContent = generateHTML(response);
+      fs.writeFile("SAMPLEindex.html", htmlPageContent, (err) =>
+        err
+          ? console.log(err)
+          : console.log(
+              "Successfully created your team profile generated SAMPLEindex.html!"
+            )
+      );
+    });
+    const intern = new Intern(
+      response.internName,
+      response.internID,
+      response.internEmail,
+      response.internOffice
+    );
+    teamMember.push(intern);
+  }
+}
+
+init();
+
+// console.log(intern);
+
+// Promise.all([manager, engineer, intern])
+// .then((values) => {
+//   const htmlPageContent = generateHTML(values);
+
+//   fs.writeFile("SAMPLEindex.html", htmlPageContent, (err) =>
+//     err
+//       ? console.log(err)
+//       : console.log(
+//           "Successfully created your team profile generated SAMPLEindex.html!"
+//         )
+//   );
+// });
+
+// .catch(function (err) {
+//   console.error("Promise rejected: " + err.issue);
