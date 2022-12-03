@@ -1,11 +1,15 @@
 const inquirer = require("inquirer");
+
 const fs = require("fs");
-// const Employee = require("./lib/Employee")
+
 const Manager = require("./lib/Manager");
+
 const Intern = require("./lib/Intern");
+
 const Engineer = require("./lib/Engineer");
 
 const teamMember = [];
+init();
 const generateHTML = ({
   managerName,
   managerID,
@@ -143,8 +147,6 @@ function init() {
   teamMember.push(manager);
 }
 
-console.log(Manager)
-
 /**engineer's questions */
 function engineerCall() {
   inquirer.prompt([
@@ -202,8 +204,6 @@ function engineerCall() {
   teamMember.push(engineer);
 }
 
-console.log(Engineer);
-
 // /**Interns Questions */
 function internCall() {
   inquirer.prompt([
@@ -226,6 +226,12 @@ function internCall() {
       type: "input",
       name: "internSchool",
       message: "What school does the Intern attend?",
+    },
+    {
+      type: "list",
+      name: "employees",
+      message: "What kind of Employee would you like to add?",
+      choices: ["Engineer", "Intern", "No more members to add"],
     },
   ]);
   if (response.employees === "Intern") {
@@ -255,9 +261,7 @@ function internCall() {
   }
 }
 
-init();
 
-// console.log(intern);
 
 // Promise.all([manager, engineer, intern])
 // .then((values) => {
