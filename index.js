@@ -9,7 +9,7 @@ const Intern = require("./lib/Intern");
 const Engineer = require("./lib/Engineer");
 
 const teamMember = [];
-init();
+
 const generateHTML = ({
   managerName,
   managerID,
@@ -89,18 +89,18 @@ const generateHTML = ({
   </body>
 </html>`;
 /**${getRole()}*/
+/**starting with team managers questions */
 function init() {
   inquirer.prompt([
-    /**starting with team managers questions */
     {
       type: "input",
       name: "managerName",
-      message: "Whats the Team Managers name?",
+      message: "What is the Team Managers name?",
     },
     {
       type: "input",
       name: "managerID",
-      message: "Whats the Team Managers ID number?",
+      message: "What is the Team Managers ID number?",
     },
     {
       type: "input",
@@ -118,8 +118,12 @@ function init() {
       message: "What kind of Employee would you like to add?",
       choices: ["Engineer", "Intern", "No more members to add"],
     },
-  ]);
-  // .then((response) =>
+  ])
+  // something to do with this if statement 
+  // blocks the code from working as intended
+  // If i comment out lines 127 - 151, and replace the ending curly brace 
+  // (which would be commented out in line 150)
+  // at 121 it will let me answer the prompts
   if (response.employees === "Intern") {
     internCall();
   }
@@ -146,7 +150,7 @@ function init() {
   );
   teamMember.push(manager);
 }
-
+init();
 /**engineer's questions */
 function engineerCall() {
   inquirer.prompt([
