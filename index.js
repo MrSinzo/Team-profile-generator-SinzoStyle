@@ -91,182 +91,187 @@ const generateHTML = ({
 /**${getRole()}*/
 /**starting with team managers questions */
 function init() {
-  inquirer.prompt([
-    {
-      type: "input",
-      name: "managerName",
-      message: "What is the Team Managers name?",
-    },
-    {
-      type: "input",
-      name: "managerID",
-      message: "What is the Team Managers ID number?",
-    },
-    {
-      type: "input",
-      name: "managerEmail",
-      message: "What is the Team Manager's Email address?",
-    },
-    {
-      type: "input",
-      name: "managerOffice",
-      message: "What is the Team Manager's office number?",
-    },
-    {
-      type: "list",
-      name: "employees",
-      message: "What kind of Employee would you like to add?",
-      choices: ["Engineer", "Intern", "No more members to add"],
-    },
-  ]);
-  /* something to do with this if statement 
-   blocks the code from working as intended
-   If i comment out lines 127 - 152, and replace the ending curly brace 
-   (which would be commented out in line 152)
-   at 121 it will let me answer the prompts, */
-  if (response.employees = [0]) {
-    internCall();
-  }
-  if (response.employees = [1]) {
-    engineerCall();
-  } else {
-    then((response) => {
+  inquirer
+    .prompt([
+      {
+        type: "input",
+        name: "managerName",
+        message: "What is the Team Managers name?",
+      },
+      {
+        type: "input",
+        name: "managerID",
+        message: "What is the Team Managers ID number?",
+      },
+      {
+        type: "input",
+        name: "managerEmail",
+        message: "What is the Team Manager's Email address?",
+      },
+      {
+        type: "input",
+        name: "managerOffice",
+        message: "What is the Team Manager's office number?",
+      },
+      {
+        type: "list",
+        name: "employees",
+        message: "What kind of Employee would you like to add?",
+        choices: ["Engineer", "Intern", "No more members to add"],
+      },
+    ])
+    .then((response) => {
       console.log(response);
-      const htmlPageContent = generateHTML(response);
-      fs.writeFile("SAMPLEindex.html", htmlPageContent, (err) =>
-        err
-          ? console.log(err)
-          : console.log(
-              "Successfully created your team profile generated SAMPLEindex.html!"
-            )
+      const manager = new Manager(
+        response.mananagerName,
+        response.managerID,
+        response.managerEmail,
+        response.managerOffice
       );
+      teamMember.push(manager);
+      if (response.employees == "Intern") {
+        internCall();
+      }
+      if (response.employees == "Engineer") {
+        engineerCall();
+      } else {
+        then((response) => {
+          const htmlPageContent = generateHTML(response);
+          fs.writeFile("SAMPLEindex.html", htmlPageContent, (err) =>
+            err
+              ? console.log(err)
+              : console.log(
+                  "Successfully created your team profile generated SAMPLEindex.html!"
+                )
+          );
+        });
+      }
     });
-  }
-  const manager = new Manager(
-    response.mananagerName,
-    response.managerID,
-    response.managerEmail,
-    response.managerOffice
-  );
-  teamMember.push(manager);
 }
 
 /**engineer's questions */
 function engineerCall() {
-  inquirer.prompt([
-    {
-      type: "input",
-      name: "engineerName",
-      message: "What is the engineer's name?",
-    },
-    {
-      type: "input",
-      name: "engineerID",
-      message: "What is the engineer's ID number?",
-    },
-    {
-      type: "input",
-      name: "engineerEmail",
-      message: "What is the engineer's Email?",
-    },
-    {
-      type: "input",
-      name: "engineerGithub",
-      message: "What is the engineer's Github Username?",
-    },
-    {
-      type: "list",
-      name: "employees",
-      message: "What kind of Employee would you like to add?",
-      choices: ["Engineer", "Intern", "No more members to add"],
-    },
-  ]);
-  if (response.employees === "Intern") {
-    internCall();
-  }
-  if (response.employees === "Engineer") {
-    engineerCall();
-  } else {
-    then((response) => {
+  inquirer
+    .prompt([
+      {
+        type: "input",
+        name: "engineerName",
+        message: "What is the Engineer's name?",
+      },
+      {
+        type: "input",
+        name: "engineerID",
+        message: "What is the Engineer's ID number?",
+      },
+      {
+        type: "input",
+        name: "engineerEmail",
+        message: "What is the Engineer's Email?",
+      },
+      {
+        type: "input",
+        name: "engineerGithub",
+        message: "What is the Engineer's Github Username?",
+      },
+      {
+        type: "list",
+        name: "employees",
+        message: "Any other Employee's you would like to add?",
+        choices: ["Engineer", "Intern", "No more members to add"],
+      },
+    ])
+    .then((response) => {
       console.log(response);
-      const htmlPageContent = generateHTML(response);
-      fs.writeFile("SAMPLEindex.html", htmlPageContent, (err) =>
-        err
-          ? console.log(err)
-          : console.log(
-              "Successfully created your team profile generated SAMPLEindex.html!"
-            )
+      const engineer = new Engineer(
+        response.engineerName,
+        response.engineerID,
+        response.engineerEmail,
+        response.engineerGithub
       );
+      teamMember.push(engineer);
+      if (response.employees == "Intern") {
+        internCall();
+      }
+      if (response.employees == "Engineer") {
+        engineerCall();
+      } else {
+        then((response) => {
+          console.log(response);
+          const htmlPageContent = generateHTML(response);
+          fs.writeFile("SAMPLEindex.html", htmlPageContent, (err) =>
+            err
+              ? console.log(err)
+              : console.log(
+                  "Successfully created your team profile generated SAMPLEindex.html!"
+                )
+          );
+        });
+      }
     });
-  }
-  const engineer = new Engineer(
-    response.engineerName,
-    response.engineerID,
-    response.engineerEmail,
-    response.engineerOffice
-  );
-  teamMember.push(engineer);
 }
 
 // /**Interns Questions */
 function internCall() {
-  inquirer.prompt([
-    {
-      type: "input",
-      name: "internName",
-      message: "What is the intern's name?",
-    },
-    {
-      type: "input",
-      name: "internID",
-      message: "What is the Intern's ID number?",
-    },
-    {
-      type: "input",
-      name: "internEmail",
-      message: "What is the Intern's Email address?",
-    },
-    {
-      type: "input",
-      name: "internSchool",
-      message: "What school does the Intern attend?",
-    },
-    {
-      type: "list",
-      name: "employees",
-      message: "What kind of Employee would you like to add?",
-      choices: ["Engineer", "Intern", "No more members to add"],
-    },
-  ]);
-  if (response.employees === "Intern") {
-    internCall();
-  }
-  if (response.employees === "Engineer") {
-    engineerCall();
-  } else {
-    then((response) => {
-      console.log(response);
-      const htmlPageContent = generateHTML(response);
-      fs.writeFile("SAMPLEindex.html", htmlPageContent, (err) =>
-        err
-          ? console.log(err)
-          : console.log(
-              "Successfully created your team profile generated SAMPLEindex.html!"
-            )
+  inquirer
+    .prompt([
+      {
+        type: "input",
+        name: "internName",
+        message: "What is the Intern's name?",
+      },
+      {
+        type: "input",
+        name: "internID",
+        message: "What is the Intern's ID number?",
+      },
+      {
+        type: "input",
+        name: "internEmail",
+        message: "What is the Intern's Email address?",
+      },
+      {
+        type: "input",
+        name: "internSchool",
+        message: "What school does the Intern attend?",
+      },
+      {
+        type: "list",
+        name: "employees",
+        message: "Any other Employee's you would like to add?",
+        choices: ["Engineer", "Intern", "No more members to add"],
+      },
+    ])
+    .then((response) => {
+      const intern = new Intern(
+        response.internName,
+        response.internID,
+        response.internEmail,
+        response.internSchool
       );
+      teamMember.push(intern);
+      if (response.employees == "Intern") {
+        internCall();
+      }
+      if (response.employees == "Engineer") {
+        engineerCall();
+      } else {
+        then((response) => {
+          console.log(response);
+          const htmlPageContent = generateHTML(response);
+          fs.writeFile("SAMPLEindex.html", htmlPageContent, (err) =>
+            err
+              ? console.log(err)
+              : console.log(
+                  "Successfully created your team profile generated SAMPLEindex.html!"
+                )
+          );
+        });
+      }
     });
-    const intern = new Intern(
-      response.internName,
-      response.internID,
-      response.internEmail,
-      response.internOffice
-    );
-    teamMember.push(intern);
-  }
 }
-
 /**Function call to get the application started */
 init();
+// internCall()
 
 // Promise.all([manager, engineer, intern])
 // .then((values) => {
