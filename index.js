@@ -9,7 +9,7 @@ const Intern = require("./lib/Intern");
 const Engineer = require("./lib/Engineer");
 
 const teamMember = [];
-let teamHtmlArray = []
+
 function generateTeam(teamMember) { // 
   const html = [];
   
@@ -33,7 +33,7 @@ function generateTeam(teamMember) { //
   };
   html.push(
     // team was originally here but changing it to teamMember array didnt help...//edit needed to use html.join(``) on line 110, page now loads but we get undefined in all categories
-    teamHtmlArray
+    teamMember
       .filter((employee) => employee.getRole() === "Manager")
       .map((manager) => generateManager(manager))
   );
@@ -58,7 +58,7 @@ function generateTeam(teamMember) { //
         `;
   };
   html.push(
-    teamHtmlArray 
+    teamMember 
       .filter((employee) => employee.getRole() === "Engineer")
       .map((engineer) => generateEngineer(engineer))
   );
@@ -81,7 +81,7 @@ function generateTeam(teamMember) { //
         `;
   };
   html.push(
-    teamHtmlArray
+    teamMember
       .filter((employee) => employee.getRole() === "Intern")
       .map((intern) => generateIntern(intern))
   );
