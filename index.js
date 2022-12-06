@@ -19,13 +19,11 @@ function generateTeam(teamMember) { //
         <div class="card shadow p-3 mb-5 bg-body rounded" style="width: 18rem;">
         <div class="card-body">
           <div class="bg-info p-2"><h5 class="card-title ml-1">${
-            this.name
+            manager.getName()
           }</h5><h5 class="ml-1">${manager.getRole()}</h5></div>
-            <p class="card-text">ID : ${this.id}</p>
-            <p class="card-text">Email : <a href="mailto:${this.email}">${
-      this.email
-    }</a></p>
-            <p class="card-text">Office Number : ${this.officeNumber}</p>
+            <p class="card-text">ID : ${manager.getId()}</p>
+            <p class="card-text">Email : <a href="mailto:${manager.getEmail()}">${manager.getEmail()}</a></p>
+            <p class="card-text">Office Number : ${manager.getOfficeNumber()}</p>
         </div>
     </div>
     </div>
@@ -45,13 +43,13 @@ function generateTeam(teamMember) { //
   <div class="card shadow p-3 mb-5 bg-body rounded" style="width: 18rem;">
     <div class="card-body">
       <div class="bg-info p-2"><h5 class="card-title ml-1">${
-        this.name
+        engineer.getName()
       }</h5><h5 class="ml-1">${engineer.getRole()}</h5></div>
-        <p class="card-text">ID : ${this.id}</p>
-        <p class="card-text">Email : <a href="mailto:${this.email}">${
-      this.email
+        <p class="card-text">ID : ${engineer.getId()}</p>
+        <p class="card-text">Email : <a href="mailto:${engineer.getEmail()}">${
+      engineer.getEmail()
     }</a></p>
-        <p class="card-text"> Github : https://www.github.com/${this.github}</p>
+        <p class="card-text"> Github : https://www.github.com/${engineer.getGithub()}</p>
       </div>
     </div>
   </div>
@@ -68,13 +66,13 @@ function generateTeam(teamMember) { //
         <div class="card shadow p-3 mb-5 bg-body rounded" style="width: 18rem;">
         <div class="card-body">
           <div class="bg-info p-2"><h5 class="card-title ml-1">${
-            this.name
+            intern.getName()
           }</h5><h5 class="ml-1">${intern.getRole()}</h5></div>
-            <p class="card-text">ID : ${this.id}</p>
-            <p class="card-text">Email : <a href="mailto:${this.email}">${
-      this.email
+            <p class="card-text">ID : ${intern.getId()}</p>
+            <p class="card-text">Email : <a href="mailto:${intern.getEmail()}">${
+      intern.getEmail()
     }</a></p>
-            <p class="card-text">School : ${this.school}</p>
+            <p class="card-text">School : ${intern.getSchool()}</p>
         </div>
       </div>
       </div>
@@ -162,7 +160,7 @@ function init() {
         response.managerOffice
       );
       teamMember.push(manager); // tried adding [] to manager see if that would fix undefined issue, no luck
-      console.log("checking manager content \n"+manager); //edit comes up as [object Object].... ugh
+      console.log(manager); //edit comes up as [object Object].... ugh
       if (response.employees == "Intern") {
         internCall();
       }
@@ -218,7 +216,7 @@ function engineerCall() {
         response.engineerGithub
       );
       teamMember.push(engineer);
-      console.log("checking engineer content \n"+engineer);
+      console.log(engineer);
       if (response.employees == "Intern") {
         internCall();
       }
@@ -289,7 +287,8 @@ function internCall() {
 init();
 function buildPage() {
   const htmlPageContent = generateTeam(teamMember);
-  console.log("line 292 checking to see if anyting lives in the teamMember at this point\n" + teamMember)
+  console.log("line 293 \/")
+  console.log(teamMember)
   fs.writeFile("SAMPLEindex.html", htmlPageContent, (err) =>
     err
       ? console.log(err)
