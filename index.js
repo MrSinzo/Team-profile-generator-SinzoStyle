@@ -11,7 +11,6 @@ const Engineer = require("./lib/Engineer");
 const teamMember = [];
 
 function generateTeam(teamMember) {
-  //
   const html = [];
 
   // creates the manager html card
@@ -40,7 +39,7 @@ function generateTeam(teamMember) {
       <div class="bg-info p-2"><h5 class="card-title ml-1">${engineer.getName()}</h5><h5 class="ml-1">${engineer.getRole()}</h5></div>
         <p class="card-text">ID : ${engineer.getId()}</p>
         <p class="card-text">Email : <a href="mailto:${engineer.getEmail()}">${engineer.getEmail()}</a></p>
-        <p class="card-text"> Github : https://www.github.com/${engineer.getGithub()}</p>
+        <p class="card-text"> Github : <a href="https://www.github.com/${engineer.getGithub()}">${engineer.getName()}'s Github Link</a></p>
       </div>
     </div>`;
   };
