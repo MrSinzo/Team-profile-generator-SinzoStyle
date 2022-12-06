@@ -88,6 +88,21 @@ const generateHTML = ({
     <script src="	https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/js/bootstrap.bundle.min.js"></script>
   </body>
 </html>`;
+
+function generateManager(manager) {
+  console.log(manager)
+  return `<div class="card shadow p-3 mb-5 bg-body rounded" style="width: 18rem;">
+  <div class="card-body">
+    <div class="bg-info p-2"><h5 class="card-title ml-1">${manager.Name}</h5><h5 class="ml-1"></h5></div>
+      <p class="card-text">ID : ${manager.ID}</p>
+      <p class="card-text">Email : <a href="mailto:${manager.Email}">${manager.Email}</a></p>
+      <p class="card-text">Office Number : ${manager.Office}</p>
+  </div>
+</div>` 
+
+}
+
+
 /**${getRole()}*/
 /**starting with team managers questions */
 function init() {
@@ -135,16 +150,7 @@ function init() {
       if (response.employees == "Engineer") {
         engineerCall();
       } else {
-        then((response) => {
-          const htmlPageContent = generateHTML(response);
-          fs.writeFile("SAMPLEindex.html", htmlPageContent, (err) =>
-            err
-              ? console.log(err)
-              : console.log(
-                  "Successfully created your team profile generated SAMPLEindex.html!"
-                )
-          );
-        });
+        buildPage()
       }
     });
 }
@@ -195,20 +201,8 @@ function engineerCall() {
       if (response.employees == "Engineer") {
         engineerCall();
       } else {
-        then((response) => {
-          console.log(response);
-          const htmlPageContent = generateHTML(response);
-          fs.writeFile("SAMPLEindex.html", htmlPageContent, (err) =>
-            err
-              ? console.log(err)
-              : console.log(
-                  "Successfully created your team profile generated SAMPLEindex.html!"
-                )
-          );
-        });
-      }
-    });
-}
+        buildPage()
+        }})}
 
 // /**Interns Questions */
 function internCall() {
@@ -255,17 +249,7 @@ function internCall() {
       if (response.employees == "Engineer") {
         engineerCall();
       } else {
-        then((response) => {
-          console.log(response);
-          const htmlPageContent = generateHTML(response);
-          fs.writeFile("SAMPLEindex.html", htmlPageContent, (err) =>
-            err
-              ? console.log(err)
-              : console.log(
-                  "Successfully created your team profile generated SAMPLEindex.html!"
-                )
-          );
-        });
+        buildPage()
       }
     });
 }
@@ -288,3 +272,17 @@ init();
 
 // .catch(function (err) {
 //   console.error("Promise rejected: " + err.issue);
+function generateTeam(teamMembers) {
+  const html = []
+  html.push(teamMembers.filter(employee => employee.getRole() === "manager").map(manager => generateManager(manager) ) )
+
+}
+function buildPage() {
+const htmlPageContent = generateHTML(response);
+fs.writeFile("SAMPLEindex.html", htmlPageContent, (err) =>
+  err
+    ? console.log(err)
+    : console.log(
+        "Successfully created your team profile generated SAMPLEindex.html!"
+      )
+)}
