@@ -9,6 +9,7 @@ const Intern = require("./lib/Intern");
 const Engineer = require("./lib/Engineer");
 
 const teamMember = [];
+
 function generateTeam(teamMember) { // 
   const html = [];
   
@@ -18,39 +19,34 @@ function generateTeam(teamMember) { //
         <div class="card shadow p-3 mb-5 bg-body rounded" style="width: 18rem;">
         <div class="card-body">
           <div class="bg-info p-2"><h5 class="card-title ml-1">${
-            this.name
+            manager.getName()
           }</h5><h5 class="ml-1">${manager.getRole()}</h5></div>
-            <p class="card-text">ID : ${this.id}</p>
-            <p class="card-text">Email : <a href="mailto:${this.email}">${
-      this.email
-    }</a></p>
-            <p class="card-text">Office Number : ${this.officeNumber}</p>
+            <p class="card-text">ID : ${manager.getId()}</p>
+            <p class="card-text">Email : <a href="mailto:${manager.getEmail()}">${manager.getEmail()}</a></p>
+            <p class="card-text">Office Number : ${manager.getOfficeNumber()}</p>
         </div>
     </div>
     </div>
         `;
   };
   html.push(
-    // team was originally here but changing it to teamMember array didnt help...//edit needed to use html.join(``) on line 110, page now loads but we get undefined in all categories
     teamMember
       .filter((employee) => employee.getRole() === "Manager")
       .map((manager) => generateManager(manager))
   );
   // creates the html card for engineers
   const generateEngineer = (engineer) => {
-    // <div class="card employee-card">
-    // <div class="card-header">
     return `
   <div class="card shadow p-3 mb-5 bg-body rounded" style="width: 18rem;">
     <div class="card-body">
       <div class="bg-info p-2"><h5 class="card-title ml-1">${
-        this.name
+        engineer.getName()
       }</h5><h5 class="ml-1">${engineer.getRole()}</h5></div>
-        <p class="card-text">ID : ${this.id}</p>
-        <p class="card-text">Email : <a href="mailto:${this.email}">${
-      this.email
+        <p class="card-text">ID : ${engineer.getId()}</p>
+        <p class="card-text">Email : <a href="mailto:${engineer.getEmail()}">${
+      engineer.getEmail()
     }</a></p>
-        <p class="card-text"> Github : https://www.github.com/${this.github}</p>
+        <p class="card-text"> Github : https://www.github.com/${engineer.getGithub()}</p>
       </div>
     </div>
   </div>
@@ -67,13 +63,13 @@ function generateTeam(teamMember) { //
         <div class="card shadow p-3 mb-5 bg-body rounded" style="width: 18rem;">
         <div class="card-body">
           <div class="bg-info p-2"><h5 class="card-title ml-1">${
-            this.name
+            intern.getName()
           }</h5><h5 class="ml-1">${intern.getRole()}</h5></div>
-            <p class="card-text">ID : ${this.id}</p>
-            <p class="card-text">Email : <a href="mailto:${this.email}">${
-      this.email
+            <p class="card-text">ID : ${intern.getId()}</p>
+            <p class="card-text">Email : <a href="mailto:${intern.getEmail()}">${
+      intern.getEmail()
     }</a></p>
-            <p class="card-text">School : ${this.school}</p>
+            <p class="card-text">School : ${intern.getSchool()}</p>
         </div>
       </div>
       </div>
@@ -116,7 +112,6 @@ function generateTeam(teamMember) { //
   `;
 }
 
-/**${getRole()}*/
 /**starting with team managers questions */
 function init() {
   inquirer
@@ -160,68 +155,12 @@ function init() {
         response.managerEmail,
         response.managerOffice
       );
-      teamMember.push(manager); // tried adding [] to manager see if that would fix undefined issue, no luck
-      console.log("checking manager content \n"+manager); //edit comes up as [object Object].... ugh
+      teamMember.push(manager);
+      console.log(manager);
       if (response.employees == "Intern") {
         internCall();
       }
-      if (response.employees == "Engineer") {
-        engineerCall();
-      } else {
-        buildPage();
-      }
-    });
-}
-
-/**engineer's questions */
-function engineerCall() {
-  inquirer
-    .prompt([
-      {
-        type: "input",
-        name: "engineerName",
-        message: "What is the Engineer's name?",
-        default: "Bill" // take out before turn in
-      },
-      {
-        type: "input",
-        name: "engineerID",
-        message: "What is the Engineer's ID number?",
-        default: "234" // take out before turn in
-      },
-      {
-        type: "input",
-        name: "engineerEmail",
-        message: "What is the Engineer's Email?",
-        default: "other@email" // take out before turn in
-      },
-      {
-        type: "input",
-        name: "engineerGithub",
-        message: "What is the Engineer's Github Username?",
-        default: "BillyJoeBob" // take out before turn in
-      },
-      {
-        type: "list",
-        name: "employees",
-        message: "Any other Employee's you would like to add?",
-        choices: ["Engineer", "Intern", "No more members to add"],
-      },
-    ])
-    .then((response) => {
-      // console.log(response);
-      const engineer = new Engineer(
-        response.engineerName,
-        response.engineerID,
-        response.engineerEmail,
-        response.engineerGithub
-      );
-      teamMember.push(engineer);
-      console.log("checking engineer content \n"+engineer);
-      if (response.employees == "Intern") {
-        internCall();
-      }
-      if (response.employees == "Engineer") {
+       else if (response.employees == "Engineer") {
         engineerCall();
       } else {
         buildPage();
@@ -277,18 +216,78 @@ function internCall() {
       if (response.employees == "Intern") {
         internCall();
       }
-      if (response.employees == "Engineer") {
+       else if (response.employees == "Engineer") {
         engineerCall();
       } else {
         buildPage();
       }
     });
 }
+
+/**engineer's questions */
+function engineerCall() {
+  inquirer
+    .prompt([
+      {
+        type: "input",
+        name: "engineerName",
+        message: "What is the Engineer's name?",
+        default: "Bill" // take out before turn in
+      },
+      {
+        type: "input",
+        name: "engineerID",
+        message: "What is the Engineer's ID number?",
+        default: "234" // take out before turn in
+      },
+      {
+        type: "input",
+        name: "engineerEmail",
+        message: "What is the Engineer's Email?",
+        default: "other@email" // take out before turn in
+      },
+      {
+        type: "input",
+        name: "engineerGithub",
+        message: "What is the Engineer's Github Username?",
+        default: "BillyJoeBob" // take out before turn in
+      },
+      {
+        type: "list",
+        name: "employees",
+        message: "Any other Employee's you would like to add?",
+        choices: ["Engineer", "Intern", "No more members to add"],
+      },
+    ])
+    .then((response) => {
+      // console.log(response);
+      const engineer = new Engineer(
+        response.engineerName,
+        response.engineerID,
+        response.engineerEmail,
+        response.engineerGithub
+      );
+      teamMember.push(engineer);
+      console.log(engineer);
+      if (response.employees == "Intern") {
+        internCall();
+      }
+      else if (response.employees == "Engineer") {
+        engineerCall();
+      } else {
+        buildPage();
+      }
+    });
+}
+
+
 /**Function call to get the application started */
 init();
+
 function buildPage() {
   const htmlPageContent = generateTeam(teamMember);
-  console.log("line 292 checking to see if anyting lives in the teamMember at this point\n" + teamMember)
+  console.log("line 293 \/")
+  console.log(teamMember)
   fs.writeFile("SAMPLEindex.html", htmlPageContent, (err) =>
     err
       ? console.log(err)
