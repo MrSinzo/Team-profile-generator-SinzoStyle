@@ -29,7 +29,8 @@ We also used Jest to test some basic functionallity of the program just to make 
 ## Screenshot of working application and Video Walkthrough
 ![ScreenShot of Deplyed Application](/SAMPLE.png)
 
-![Video Walkthrough](https://drive.google.com/file/d/1lCR3dtTFS40rYvgwauuS0LvMLEdKS-Yc/view)
+Video Walkthrough link below!
+https://drive.google.com/file/d/1lCR3dtTFS40rYvgwauuS0LvMLEdKS-Yc/view
 
 ## Credits and Licenses
 Using MIT License [Check it here!](https://opensource.org/licenses/MIT)
